@@ -1,0 +1,11 @@
+{
+  "name": "pinework",
+  "owner": { "name": "Pinework" },
+  "plugins": [
+    {
+      "name": "pinework",
+      "source": "./plugins/pinework",
+      "description": "Teaches your agent to use Pinework: tasks, chats, runs, wiki and files through the pinework CLI."
+    }
+  ]
+}
