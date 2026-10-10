@@ -1,11 +1,14 @@
 {
   "name": "pinework",
-  "owner": { "name": "Pinework" },
+  "owner": {
+    "name": "Pinework"
+  },
+  "description": "Pinework's skills for coding agents.",
   "plugins": [
     {
       "name": "pinework",
       "source": "./plugins/pinework",
-      "description": "Teaches your agent to use Pinework: tasks, chats, runs, wiki and files through the pinework CLI."
+      "description": "Teaches your agent to use Pinework through the pinework CLI: tasks, chats, runs, wiki and files, plus creating agents and onboarding."
     }
   ]
 }

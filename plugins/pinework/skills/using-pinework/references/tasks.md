@@ -17,20 +17,20 @@ Every rule that starts a run without a human pressing Run. Canon: `doc/contracts
 | A task is assigned to an agent by a human or by another agent | The assignee | The task | "You were assigned task PIN-n." |
 | An agent assigns a task to itself from inside its own run | Nobody now. The per-minute sweep wakes it once the agent has no run executing. | The task | Same. |
 | A task carries a future `startAt` | Nobody until then. The sweep wakes the assignee at that time. | The task | Same. |
-| A comment on a task @-mentions agents | Each mentioned agent, once. Never the author. | The task. A live run on it is steered instead. | The comment. |
-| A human comments on a task with no @-mention | The assignee | The task | The comment. |
-| An agent comments on a task with no @-mention | Nobody. Write the @ if you mean it. | | |
+| A comment on a task mentions agents by link | Each mentioned agent, once. Never the author. | The task. A live run on it is steered instead. | The comment. |
+| A human comments on a task with no mention | The assignee | The task | The comment. |
+| An agent comments on a task with no mention | Nobody. Write the agent's link if you mean it. | | |
 | A message lands in a DM | The DM's agent, every message | The DM | The message. |
-| A message lands in a channel | @-mentioned agents only | The channel | The message. |
+| A message lands in a channel | Agents mentioned by link only | The channel | The message. |
 | The last `blocks` blocker of a task closes, or a `blocks` edge is removed | The dependent's assignee, if it is still blocked by nothing else | The dependent task | "A blocking dependency for task PIN-n has been resolved." |
 | Every subtask of a parent closes | The parent's assignee | The parent | "All subtasks/fan-out work for task PIN-n is complete." |
 | A human resolves your approval or answers your question | You | Where you raised it | The resolution. |
 | A task you **watch** reaches done, cancelled or blocked | Each agent watcher with an origin. Never the task's assignee, never the agent whose run caused it. | Created from inside your run on task X → a run on X. Created from a DM → a note in that DM. | "PIN-y (title) done: <last comment, 3 lines>". |
 | An automation fires | The automation's agent | Its task or its DM | The automation's prompt. |
 
-Watchers: you watch every task you create and every task assigned to you. `pinework task watch add PIN-75` adds you (default subject `me`), `task watch add PIN-75 @code-reviewer` adds a peer, `task watch list PIN-75` shows the list and where each agent is woken. Where you are woken is captured from the run you add yourself from. An @-mention never makes a watcher.
+Watchers: you watch every task you create and every task assigned to you. `pinework task watch add PIN-75` adds you (default subject `me`), `task watch add PIN-75 @dex` adds a peer, `task watch list PIN-75` shows the list and where each agent is woken. Where you are woken is captured from the run you add yourself from. A mention never makes a watcher.
 
-To reach a peer NOW, @-mention it in a task comment. That is the only comment wake. A DM to a peer is not a thing.
+To reach a peer NOW, mention it in a task comment with its link, `[Dex](pinework://agent/<agent-id>)`. Copy the link from the TEAM block. That is the only comment wake. A plain `@dex` is text and wakes no one. A DM to a peer is not a thing.
 
 Priority: `urgent` | `high` | `normal` | `low`.
 
@@ -62,7 +62,7 @@ Let the fields carry the rest. A board filters on a field, never on a string:
 | `URGENT` | `--priority urgent` |
 | `(blocks v2026.9.3)` | `task dependency add --type blocks` |
 | `feat(api,cli,dashboard)` | a surfaces line in the body, where it can be accurate |
-| `PIN-3303 S1` | the key itself, and `--parent` |
+| `PIN-75 S1` | the key itself, and `--parent` |
 
 One clause. The symptom or the change, never both welded with a dash.
 
@@ -100,11 +100,11 @@ Plus the wiring: `--parent` when this is child work and root tasks are top-level
 
 The rule that matters most. Every requirement you state must come back as something checkable, or it does not get built. The one most often dropped is the subtle invariant you explained best.
 
-Judged blind over 8 of our own tasks, every decisive result turned on this. PIN-2102 explains that authorize must bind a credential without enabling the row, then never checks it, and that is the exact regression the task exists to close.
+A common failure: the body explains that authorize must bind a credential without enabling the row, then never checks it. That is the exact regression the task exists to close.
 
 "Tests pass" is not a done-when. Every task ends with tests passing.
 
-**Nothing goes below Done when and Proof**, except the open questions, which state no requirement. A later addition goes above the finish line and brings its own check. PIN-3362 lost both judges because two of its seven build items sit in an appendix under it.
+**Nothing goes below Done when and Proof**, except the open questions, which state no requirement. A later addition goes above the finish line and brings its own check. Build items in an appendix under the finish line get skipped.
 
 ### Say the cause once
 
@@ -114,15 +114,15 @@ Cut: `Measured, not inferred` · `Two defects, not one` · `Cause, grounded on o
 
 `Fix direction, not a ruling` is worse than nothing. It demotes your only instruction to advice and the builder fixes half the defect. Unsure? Name the uncertainty, then still say what must be true when it is finished.
 
-Never cut a number, a path, an id, a URL, a constraint or an out-of-scope line. Length is not the defect. In the same eval the longer draft won nothing, but every weak draft was long with narration, not with facts.
+Never cut a number, a path, an id, a URL, a constraint or an out-of-scope line. Length is not the defect. A longer draft wins nothing on its own. A weak draft is long with narration, not with facts.
 
 ### Write addresses in full
 
-`POST /conversations/:id/restore`, not "the restore route". `apps/api/src/routes/import.ts:1414`, not `import.ts:1414`. `PIN-3361 (research: how harnesses install plugins)`, not "the research task this depends on". Backtick every identifier so it greps. Never point at a route or a file with a pronoun.
+`POST /conversations/:id/restore`, not "the restore route". `src/routes/import.ts:1414`, not `import.ts:1414`. `PIN-75 (research: how coding agents install plugins)`, not "the research task this depends on". Backtick every identifier so it greps. Never point at a route or a file with a pronoun.
 
 ### Say what is out
 
-One line: `Not in this task: …`. Scope went fuzzy on 3 of 8 briefs, all bugs, where a builder could not tell whether the mess left behind was theirs to clean up.
+One line: `Not in this task: …`. Without it, a builder on a bug cannot tell whether the mess left behind was theirs to clean up.
 
 ### Four shapes
 
@@ -134,7 +134,7 @@ One line: `Not in this task: …`. Scope went fuzzy on 3 of 8 briefs, all bugs, 
 
 **Review.** What to review against, the few things to check by hand, whether the reviewer may merge, done when, proof. A reviewer never fixes.
 
-Never: create with a title alone · set `blocked` · move status with `update` · assign a human · @-mention an agent you do not mean to wake.
+Never: create with a title alone · set `blocked` · move status with `update` · assign a human · link an agent you do not mean to wake.
 
 Parent and dependency are different graphs. `--parent` is hierarchy. `dependency add --type blocks` is ordering. `related` only means "show together".
 
@@ -142,6 +142,6 @@ Capture the public id the create returns (`tsk_…`) for parents, dependencies a
 
 ## Name the thing
 
-A human reads your comment. Write `PIN-1717 (e2e runs in neither CI job)`, not `PIN-1717`. Same for every primitive: `run_UWYY… (Sam T, claude, succeeded)`. A bare id is right only in a machine surface: a flag value, a JSON field.
+A human reads your comment. Write `PIN-75 (e2e runs in neither CI job)`, not `PIN-75`. Same for every primitive: `run_UWYY… (Sam T, claude, succeeded)`. A bare id is right only in a machine surface: a flag value, a JSON field.
 
 A Pinework op that fails during honest use is a dogfooding find. File it as a task and let it block. Do not route around it.
