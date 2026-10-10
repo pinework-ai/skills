@@ -14,7 +14,7 @@ Never start a run for another agent by hand. A message is the only way to wake o
 ## Send
 
 ```
-pinework conversation create --participant agt_… --kind dm --message "Verify these 20 tasks: …"
+pinework conversation create --participant <agent-id> --kind dm --message "Verify these 20 tasks: …"
 ```
 
 Every send opens a new conversation. Two asks to the same agent are two conversations. The command prints the `cnv_` id. Keep it.

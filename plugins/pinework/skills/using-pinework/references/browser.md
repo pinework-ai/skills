@@ -1,17 +1,30 @@
-# The Desktop browser tab
+# The browser verbs
 
-A device run can look at a page and click through a UI. Six verbs drive the browser tab inside Pinework Desktop on this device (PIN-3019). `browser open <url>` opens or reuses the tab. `navigate <url>` moves the open tab. `snapshot` prints the page as refs you can act on. `click <@eN>` presses the element a ref names. `type <@eN> "text"` types into it. `exec` runs your own script in the page. `pinework browser <cmd> --help` has the flags.
+A run can look at a page and click through a UI. Six verbs drive one browser tab. On a device run it is the tab inside Pinework Desktop. In a cloud run it is a headless browser inside the cloud box. `browser open <url>` opens or reuses the tab. `navigate <url>` moves the open tab. `snapshot` prints the page as refs you can act on. `click <@eN>` presses the element a ref names. `type <@eN> "text"` types into it. `exec` runs your own script in the page. A seventh verb, `fill <login>`, works in a cloud run only. `pinework browser <cmd> --help` has the flags.
 
 Rules:
 
 - **Refs come from `snapshot`.** Never guess `@e4`. Re-snapshot after the page changes, or the verb fails `stale_ref` and tells you to snapshot again.
-- **Any verb starts Desktop hidden if it is not running**, then retries once (`sendDesktopVerb`, `apps/cli/src/runtime/desktop-control-client.ts`). No window opens and nothing steals focus. `app_unavailable` means one of three things: this machine is not a Mac, the app is not installed, or the installed build is older than the browser verbs. The error says which, and names the installed version (`appUnavailableHint`, `apps/cli/src/commands/browser.ts`). Do not retry: read the advice, then say what you found.
-- **Testing a dev build? Say so.** Export `PINEWORK_DESKTOP_CHANNEL=dev` and the verbs talk to a checkout running `pnpm --filter desktop dev` instead of the installed app (PIN-3491). The two run side by side on their own sockets, in their own homes: the variable also moves the CLI to `~/.pinework-dev`, with its own login (PIN-3679). Without the variable you get the installed app, which is the right default. A dev channel is never auto-started — if nothing is serving it, the error says so and names the command to run.
-- **The tab is the human's.** It is the same tab the right panel shows, not a private browser. So say what you did: post a comment naming the url and what you clicked, and paste the snapshot when it is the evidence.
+- **On a device, any verb starts Desktop hidden if it is not running**, then retries once. No window opens and nothing steals focus. `app_unavailable` means one of three things: this machine is not a Mac, the app is not installed, or the installed build is older than the browser verbs. The error says which, and names the installed version. Do not retry: read the advice, then say what you found.
+- **On a device, the tab is the human's.** It is the same tab the right panel shows, not a private browser. So say what you did: post a comment naming the url and what you clicked, and paste the snapshot when it is the evidence.
 
 This is not `agent-browser`. That drives a separate Chromium nobody can watch. These verbs drive the tab a human can open and see.
 
-**Device runs only, and the device has to be a Mac.** Pinework Desktop is packaged for macOS and nothing else. A cloud run cannot reach these verbs at all: the sandbox has no Desktop to drive. On a device you install or update Desktop when a verb answers `app_unavailable`. In the cloud there is nothing to install, so use the browser tool your run already has, or move the work to a device run.
+**Where the tab lives.** On a device it lives in Pinework Desktop, which runs on macOS only. Install or update Desktop when a verb answers `app_unavailable`. In a cloud run the tab is a headless browser in the box, and no human watches it. There is nothing to install, so never send a cloud run to Desktop.
+
+## `fill` — a vaulted login, in a cloud run
+
+`pinework browser fill <login>` types a login from the vault into the open page. Name the login by its id or name. It must be granted to you, and the page's origin must be one of the login's URLs. The API refuses any other page.
+
+```bash
+pinework browser open https://github.com/login
+pinework browser fill github-login
+pinework browser snapshot
+```
+
+- **You never see the value.** The verb prints which boxes it filled, `username filled, password filled`, or booleans with `--json`. The value goes from the API to the page and nowhere else.
+- **Two-step logins fill twice.** When the page has no password box yet, the verb fills the username and says so. Submit it, then run `fill` again on the next page.
+- **On a device it answers `not_supported_on_device`**. There, a human fills the login with the Vault button in Pinework Desktop.
 
 ## `exec` — when the five verbs do not fit
 
@@ -30,8 +43,8 @@ pinework browser exec --js "const el = [...document.querySelectorAll('a,button')
 
 # 3. Wait for a selector, then screenshot it to a file.
 pinework browser exec --timeout-ms 30000 --js "const deadline = Date.now() + 20000; let field = null; while (Date.now() < deadline && !field) { field = document.querySelector('input[type=email]'); if (!field) await new Promise(r => setTimeout(r, 200)); } if (!field) throw new Error('selector never appeared'); field.placeholder"
-pinework browser exec --cdp Page.captureScreenshot --params '{"format":"png"}' --out /tmp/page.png
-pinework file upload /tmp/page.png --task PIN-…
+pinework browser exec --cdp Page.captureScreenshot --params '{"format":"png"}' --out "${TMPDIR:-/tmp}/page.png"
+pinework file upload "${TMPDIR:-/tmp}/page.png" --task PIN-…
 ```
 
 Writing the script:
@@ -47,4 +60,4 @@ Writing the script:
 
 **What is logged.** The panel shows the first 80 characters of your script and never its result, the same way `type` shows the field and never the text. Say what you did in a comment; the log alone will not tell the human what came back.
 
-**What a script can read.** Anything on the page, including the value of a password box a human typed into that tab. One user per workspace today, so this is a stated limit rather than a leak — but do not read fields you were not sent for, and never paste one into a comment.
+**What a script can read.** Anything on the page, including the value of a password box a human typed into that tab. Do not read fields you were not sent for, and never paste one into a comment.

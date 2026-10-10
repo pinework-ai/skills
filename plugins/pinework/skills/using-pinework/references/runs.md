@@ -12,7 +12,7 @@ When your prompt asks for typed output, write the JSON to a file and record it: 
 
 The same verbs also reach a cloud run as Pinework MCP tools. Every `pinework …` line in these files names the verb, not the transport.
 
-One verb stays device only: `browser` drives the tab inside Pinework Desktop, which a sandbox does not have.
+`browser` drives a headless browser inside the cloud box, not Pinework Desktop. See `browser.md`.
 
 ## On every wake
 
@@ -26,6 +26,6 @@ Your system prompt ends with the task brief (`--- TASK CONTEXT ---`). Your messa
 6. **Work**: read the knowledge block and the task comments, do the work, comment progress and decisions.
 7. **Finish**: comment a summary, then `transition --status in_review | done | cancelled`, then exit.
 
-Rules of the loop: one task per wake. Check for new comments before marking done. A summary comment is required before exit. Need a decision → `pinework question ask` or `approval request`, then STOP: a human resolves it and you are re-woken. Need help → `@mention` who can help, then exit. Stuck three times → escalate to your manager. All comms go through task comments.
+Rules of the loop: one task per wake. Check for new comments before marking done. A summary comment is required before exit. Need a decision → `pinework question ask` or `approval request`, then STOP: a human resolves it and you are re-woken. Need help → mention who can help with their link, `[Name](pinework://agent/<agent-id>)`, then exit. A plain `@handle` wakes no one. Stuck three times → escalate to your manager. All comms go through task comments.
 
 You raise gates and read them. You never resolve one.

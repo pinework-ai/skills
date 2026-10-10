@@ -17,5 +17,4 @@ Your prompt already carries the Pinework index: the verb families, the six rules
 - `references/links.md`: which objects link, and how.
 - `references/wiki.md`: search, read, cite, write, review.
 - `references/import.md`: `import scan` then `import apply`.
-- `references/browser.md`: the Desktop browser tab, device runs on a Mac.
-- `references/terminal.md`: the Desktop terminal tab, device runs on a Mac.
+- `references/browser.md`: the browser verbs, in Pinework Desktop on a device or headless in a cloud box. `fill` types a vaulted login.

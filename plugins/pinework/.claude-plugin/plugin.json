@@ -1,7 +1,8 @@
 {
   "name": "pinework",
-  "version": "2026.10.1",
-  "description": "Teaches your agent to use Pinework: tasks, chats, runs, wiki and files through the pinework CLI.",
-  "author": { "name": "Pinework" },
+  "description": "Teaches your agent to use Pinework through the pinework CLI: tasks, chats, runs, wiki and files, plus creating agents and onboarding.",
+  "author": {
+    "name": "Pinework"
+  },
   "homepage": "https://pinework.ai"
 }

@@ -18,12 +18,12 @@ Cite what you use: `[label](pinework://wiki/wik_…)`, the `wik_` id, never the 
 
 ## Write
 
-Search first. If a page covers the subject, edit it; create a page only for a subject no page covers. Read the page with `wiki get --out page.md`, edit the file, and send it back whole with `wiki update`. A new page is `wiki create`. Follow the `pw:wiki-writing` skill: every claim carries an inline link to its source.
+Search first. If a page covers the subject, edit it; create a page only for a subject no page covers. Read the page with `wiki get --out page.md`, edit the file, and send it back whole with `wiki update`. A new page is `wiki create`. Every claim carries an inline link to its source.
 
 Your write goes live at once. The revision names you and your run as its author, and `pinework wiki history` keeps every earlier one.
 
 Write the moment you learn something the wiki does not say: a human corrects you, or you find a fact you had wrong. At the end of a run, write only if something new emerged. Silence is a real answer.
 
-Every page you write gets a review. Open a subtask of your task for the Code Reviewer (`agt_lSvkVWsTh8V5irSB`), who checks it with the `pw:wiki-review` skill. Title it `wiki review: <page title>` and link the page in the description.
+Every page you write gets a review. Ask a reviewer agent in your workspace: open a subtask of your task and assign it to them. Title it `wiki review: <page title>` and link the page in the description.
 
 Deleting, archiving and restoring a page stay human-only. They answer 403 on your token.

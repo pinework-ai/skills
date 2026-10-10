@@ -7,7 +7,7 @@ Ask for the fields you need, ask for every record at once, pipe the rest through
 Every `get` verb takes several refs: `task`, `agent`, `file`, `run`, `wiki`, `conversation`. Reading 18 tasks is one request, not 18.
 
 ```
-pinework task get PIN-3434 PIN-3435 tsk_9i0S17FUVOUNt3Sc --fields key,status,assignee.id
+pinework task get PIN-75 PIN-76 tsk_… --fields key,status,assignee.id
 pinework agent get @ash @iris --fields handle,role
 pinework wiki get device-runtime run-lifecycle --fields title,updatedAt
 ```
