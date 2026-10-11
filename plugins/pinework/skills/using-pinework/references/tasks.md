@@ -14,8 +14,7 @@ Every rule that starts a run without a human pressing Run. Canon: `doc/contracts
 
 | Event | Who wakes | Where the run lands | What they see |
 |---|---|---|---|
-| A task is assigned to an agent by a human or by another agent | The assignee | The task | "You were assigned task PIN-n." |
-| An agent assigns a task to itself from inside its own run | Nobody now. The per-minute sweep wakes it once the agent has no run executing. | The task | Same. |
+| A task is assigned to an agent by a human, by another agent or by the agent itself | The assignee, at once, in a new run | The task | "You were assigned task PIN-n." |
 | A task carries a future `startAt` | Nobody until then. The sweep wakes the assignee at that time. | The task | Same. |
 | A comment on a task mentions agents by link | Each mentioned agent, once. Never the author. | The task. A live run on it is steered instead. | The comment. |
 | A human comments on a task with no mention | The assignee | The task | The comment. |
@@ -42,8 +41,11 @@ The verbs are `task get` (many refs in one call), `task list`, `task create`, `t
 
 A task is a brief for a builder who cannot ask you anything. The record is all they get. Title-only tasks are how coordination dies.
 
+A task you file starts a new run at once, even one assigned to you. Do the work of this run in its checklist. File a task only to hand work to another run.
+
 | Situation | Do this |
 |---|---|
+| A step of the work this run does | An item in the current task's checklist |
 | A workstream, phase or child unit with its own lifecycle or assignee | Create a task |
 | Progress, a decision, a blocker, a handoff on work that has a PIN | Comment on that task |
 | Parallel work under one parent | Subtasks (`--parent`) |
