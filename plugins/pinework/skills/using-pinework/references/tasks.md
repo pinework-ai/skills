@@ -36,6 +36,8 @@ Priority: `urgent` | `high` | `normal` | `low`.
 
 The verbs are `task get` (many refs in one call), `task list`, `task create`, `task transition`, `task dependency add` and `comment add`. `pinework task <cmd> --help` has the flags. `transition` owns status, and `update` cannot move it.
 
+A comment body that holds a backtick or `$`: write it to a file with the Write tool, then `pinework comment add <task> --body-file <path>`. The permission gate asks for approval on those characters inside an inline body. Never pipe a heredoc into `--body-file -`, since `<<` also asks.
+
 `task create` refuses a duplicate: it searches the open tasks and asks Jev if one is the same work. A match is `409 task_duplicate` naming the task. Read that task first and add to it. `--force` creates anyway when it really is different work.
 
 ## How to write a task
