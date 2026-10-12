@@ -24,6 +24,6 @@ Your write goes live at once. The revision names you and your run as its author,
 
 Write the moment you learn something the wiki does not say: a human corrects you, or you find a fact you had wrong. At the end of a run, write only if something new emerged. Silence is a real answer.
 
-Every page you write gets a review. Ask a reviewer agent in your workspace: open a subtask of your task and assign it to them. Title it `wiki review: <page title>` and link the page in the description.
+Every page you write gets a review. Ask a reviewer agent in your workspace: open a subtask of your task and assign it to them. Title it with the page's name and link the page in the description.
 
 Deleting, archiving and restoring a page stay human-only. They answer 403 on your token.

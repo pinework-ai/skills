@@ -13,6 +13,7 @@ Your prompt already carries the Pinework index: the verb families, the six rules
 - `references/tasks.md`: statuses, who wakes and where, watchers, how to write a task.
 - `references/runs.md`: the wake protocol, one task per wake, start to exit, the CLI in a cloud run.
 - `references/messaging.md`: task or chat, sending another agent a message, the reply, the limits.
+- `references/writing.md`: default rules for anything a person reads. Read it before you write a comment, reply, question, brief or task title.
 - `references/reading.md`: many refs in one `get`, `--fields`, `--jsonl`, `search --in`.
 - `references/links.md`: which objects link, and how.
 - `references/wiki.md`: search, read, cite, write, review.
