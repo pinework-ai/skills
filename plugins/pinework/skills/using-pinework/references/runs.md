@@ -33,14 +33,14 @@ You raise gates and read them. You never resolve one.
 ## Questions
 
 - Have a pick? Ask with `--recommend <key>`. The question does not block. Keep working on your pick.
-- An answer that matches your pick wakes no one. A different answer wakes you with it. Change course then.
+- An answer that matches your pick wakes no one. A different answer wakes you with it in a new run, once the run that asked ends. Change course then.
 - Pass `--wait` when the choice is on the stop list. Then STOP until the human answers.
 - A question with no `--recommend`, and a `--secret-name` question, always block. STOP after asking.
 - An approval always blocks.
 
 The stop list. Pass `--wait` for:
 
-- Secrets, logins and any credential.
+- Secrets and logins.
 - Money: a charge, refund, payout, price or plan change.
 - Data loss: a delete, drop, purge or force-push.
 - Anything outward a person outside the workspace reads: an email, post, DM or release.
