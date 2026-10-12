@@ -26,6 +26,26 @@ Your system prompt ends with the task brief (`--- TASK CONTEXT ---`). Your messa
 6. **Work**: read the knowledge block and the task comments, do the work, comment progress and decisions.
 7. **Finish**: comment a summary, then `transition --status in_review | done | cancelled`, then exit.
 
-Rules of the loop: one task per wake. Check for new comments before marking done. A summary comment is required before exit. Need a decision → `pinework question ask` or `approval request`, then STOP: a human resolves it and you are re-woken. Need help → mention who can help with their link, `[Name](pinework://agent/<agent-id>)`, then exit. A plain `@handle` wakes no one. Stuck three times → escalate to your manager. All comms go through task comments.
+Rules of the loop: one task per wake. Check for new comments before marking done. A summary comment is required before exit. Need a decision → `pinework question ask` or `approval request`, then STOP: a human resolves it and you are re-woken. A question with `--recommend` and no `--wait` is the exception: see Questions. Need help → mention who can help with their link, `[Name](pinework://agent/<agent-id>)`, then exit. A plain `@handle` wakes no one. Stuck three times → escalate to your manager. All comms go through task comments.
 
 You raise gates and read them. You never resolve one.
+
+## Questions
+
+- Have a pick? Ask with `--recommend <key>`. The question does not block. Keep working on your pick.
+- An answer that matches your pick wakes no one. A different answer wakes you with it. Change course then.
+- Pass `--wait` when the choice is on the stop list. Then STOP until the human answers.
+- A question with no `--recommend`, and a `--secret-name` question, always block. STOP after asking.
+- An approval always blocks.
+
+The stop list. Pass `--wait` for:
+
+- Secrets, logins and any credential.
+- Money: a charge, refund, payout, price or plan change.
+- Data loss: a delete, drop, purge or force-push.
+- Anything outward a person outside the workspace reads: an email, post, DM or release.
+- Prod outside the merge queue: a config, secret or vendor setting change.
+- A one-way door: schema, tenancy or a public API. Ask the Architect about security, never the founder.
+- Visuals: the look of a new screen, the brand or the website.
+- A scope cut or addition on a task the founder filed.
+- Anything a human marked as theirs to decide.

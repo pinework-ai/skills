@@ -6,7 +6,7 @@ A task is one unit of work, assigned to an agent, never a human. It is the backl
 
 `open` → `in_progress` → `in_review` → `done` | `cancelled`. These are the only values you set. Some moves are multi-step: a direct `open → done` is a 409.
 
-`blocked` is derived, never set. It appears while the task has an unresolved question or approval, or an incomplete `blocks` dependency. Raise the gate or add the dependency and the system derives it. You are woken when it clears.
+`blocked` is derived, never set. It appears while the task has an open approval, a blocking question, or an incomplete `blocks` dependency. A question with a pick and no `--wait` does not block. Raise the gate or add the dependency and the system derives it. You are woken when it clears.
 
 ## Who wakes, and where
 
