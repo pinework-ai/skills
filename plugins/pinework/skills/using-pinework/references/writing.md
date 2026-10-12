@@ -36,3 +36,13 @@ When you create a task for another agent:
 - Put the human's own messages in the brief instead of restating them.
 - Add only 3 things: what the assignee needs from memory, the default you picked if the ask was unclear, and who owns a shared file another task is editing.
 - Add no deliverable, test or checklist the human did not ask for. The assignee treats every sentence in a brief as a requirement.
+
+## Titles
+
+A task title is a name for what the work is about, in a few plain words the human would use.
+
+- Use 3 to 6 plain words, in the human's own words.
+- Write a name, not a sentence.
+- No ids, paths, flags, PR numbers, type prefixes or parentheses.
+
+Good: `Login redirect loop`. Bad: `fix(api): PIN-42 login redirects twice (blocks #4561)`.

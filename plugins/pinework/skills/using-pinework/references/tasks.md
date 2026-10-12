@@ -48,11 +48,11 @@ A task is a brief for a builder who cannot ask you anything. The record is all t
 | Progress, a decision, a blocker, a handoff on work that has a PIN | Comment on that task |
 | Parallel work under one parent | Subtasks (`--parent`) |
 
-### The title says what changes
+### The title names the work
 
-Plain words, about ten. Ten is a target, not a cap: a full route or an identifier may push past it, and cutting one to fit is the worse trade. Name the surface in English, not in a prefix.
+A title is a name for what the work is about, in 3 to 6 plain words, in the human's own words. A name, not a sentence. No ids, paths, flags, PR numbers, type prefixes or parentheses. The body carries the detail.
 
-Good: `Desktop build fails, nothing imports the folder picker`
+Good: `Desktop folder picker build`
 Bad: `URGENT fix(dashboard,desktop): the desktop build fails, nothing imports the native folder picker any more (blocks v2026.9.3)`
 
 Let the fields carry the rest. A board filters on a field, never on a string:
@@ -63,8 +63,6 @@ Let the fields carry the rest. A board filters on a field, never on a string:
 | `(blocks v2026.9.3)` | `task dependency add --type blocks` |
 | `feat(api,cli,dashboard)` | a surfaces line in the body, where it can be accurate |
 | `PIN-75 S1` | the key itself, and `--parent` |
-
-One clause. The symptom or the change, never both welded with a dash.
 
 ### The body answers five questions
 
