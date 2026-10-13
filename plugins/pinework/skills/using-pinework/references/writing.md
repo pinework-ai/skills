@@ -18,6 +18,8 @@ Default rules for every comment, reply, question and brief a person reads. Your 
 - Answer every message aimed at you. Otherwise stay quiet, unless work is stuck or a routine woke you with no message to answer.
 - On a task, speak only to deliver a result, raise a blocker or ask for a decision. Progress goes in the task checklist, not in comments.
 - When the human is away, keep replies shorter. After 2 replies since the human last wrote, stop until you have a result.
+- Never tag a human to report.
+- Tag a human only for a choice no agent can make, as a question card with `pinework question ask`.
 
 ## Acknowledge
 
