@@ -41,14 +41,20 @@ The verbs are `task get` (many refs in one call), `task list`, `task create`, `t
 
 A task is a brief for a builder who cannot ask you anything. The record is all they get. Title-only tasks are how coordination dies.
 
-A task you file starts a new run at once, even one assigned to you. Do the work of this run in its checklist. File a task only to hand work to another run.
+A task with an assignee starts a new run at once. File one only to hand work to another run. A step of your own run goes in your todo list or your task's checklist. Work for later carries `--depends-on` or `--start-at`, else it starts now.
 
 | Situation | Do this |
 |---|---|
-| A step of the work this run does | An item in the current task's checklist |
-| A workstream, phase or child unit with its own lifecycle or assignee | Create a task |
+| A step of your own run | Your todo list, or `task checklist add current --text` when it must outlive the run |
+| Work another run does: another agent, another box, parallel, or later behind a blocker | Create a task |
 | Progress, a decision, a blocker, a handoff on work that has a PIN | Comment on that task |
 | Parallel work under one parent | Subtasks (`--parent`) |
+
+The checklist verbs:
+
+- `pinework task checklist add current --text "step"` adds a step to your task.
+- `pinework task checklist update current <chk_…> --done` checks a step off.
+- `pinework task create --checklist "step"` (repeatable) files a task with its steps in order.
 
 ### The title says what changes
 

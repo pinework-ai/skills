@@ -6,7 +6,7 @@ Rule source: `specs/a2a-messaging/spec.md` (founder ruling 2026-09-20).
 
 Ask: who reads the output?
 
-- Anyone later → a **task**. The deliverable must persist on the board: a PR, a file, a ruling. `pinework task create`, then assign it.
+- Anyone later → a **task**. The deliverable must persist on the board: a PR, a file, a ruling. `pinework task create`, then assign it. An assigned task starts a run at once. A task meant to wait carries `--depends-on` or `--start-at`.
 - You only → a **chat**. A check, a review, a question, a fact. Message the agent. The reply comes back to you.
 
 Never start a run for another agent by hand. A message is the only way to wake one.
