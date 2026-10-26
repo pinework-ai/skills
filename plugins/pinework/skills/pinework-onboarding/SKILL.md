@@ -1,71 +1,46 @@
 ---
 name: pinework-onboarding
 description: >-
-  Run the user's first conversation with Chief: learn their work, propose a starting team, create it on a yes, and offer to read their recent Claude Code sessions. Use in the "Getting started" conversation.
+  Run the user's first conversation with Chief: bring in what their coding agents know, or a ChatGPT or Claude.ai paste, propose a starting team and wiki pages in one message, save on a yes, then set up plugins, tools and GitHub in the chat. Use in the "Getting started" conversation.
 ---
 
 # pinework-onboarding
 
-The user just finished signing up. Your first message is already posted. It asked what they work on and offered to read their Claude Code sessions. Their reply woke you.
+The user just signed up. Onboarding sent them straight here. Your first message is already posted. It offered two things: read what Claude Code, Codex and Cursor know on this Mac, or take a paste from ChatGPT or Claude.ai. Their reply woke you.
 
-Keep each reply to five lines or fewer. Ask one question at a time. Never show a CLI command, id or error to the user.
+You do the setup the old onboarding screens did. The user should never need a settings page.
 
-## 1. Learn their work
+Keep each reply to five lines or fewer, except the proposal. Ask one question at a time. Never show a CLI command, an id or an error to the user.
 
-Ask until you know three things: what they build, who it is for, and what takes their time this week. Two or three short questions is enough. Do not interview them.
+## The path
 
-If they said yes to the sessions read, go to step 4 first. Their sessions answer most of these questions.
+1. **Pick a source.** Follow the user's answer:
+   - Yes to this Mac: read [references/import-knowledge.md](references/import-knowledge.md).
+   - ChatGPT or Claude.ai: read [references/paste.md](references/paste.md).
+   - Neither: ask what they build, who it is for, and what takes their time this week. Two or three short questions. Do not interview them.
+2. **Propose once.** Read [references/proposal.md](references/proposal.md). One message holds the agents, the wiki pages and what you dropped.
+3. **Save on a yes.** Read [references/save.md](references/save.md). Save nothing before the yes. A no saves nothing.
+4. **Set up the rest.** Read [references/config.md](references/config.md): plugins and skills from this Mac, tools, GitHub.
+5. **Hand off.** Suggest one first task for one agent. File it only on a yes. Then say in one line what happens next: the agent works, and the user sees it on the board. Stop asking questions.
 
-## 2. Propose a starting team
+Step 4 comes after step 3, so the new agents exist when you connect tools. If the user asks for step 4 first, connect each tool to yourself, and tell the user the new agents get it on the connectors page.
 
-Propose 2 to 4 agents. Each has a name and one job in one line. Tie each job to something the user said.
+## What replaced the old onboarding screens
 
-```
-Here's a team I'd start with:
-- Scout: reads your support inbox and files each bug as a task.
-- Forge: fixes the bugs Scout files, one pull request each.
-- Quill: writes the weekly changelog from what merged.
-Want me to create them? You can rename or drop any.
-```
+| Old screen | Now, in this chat |
+|---|---|
+| Intro slides | Your first message |
+| Bring your setup | `pinework import scan`, then `pinework import apply` (config.md) |
+| Which tools do you use | `pinework connector search`, `pinework connection create --agent-ids`, then `pinework browser open <authorizeUrl>` (config.md) |
+| Connect GitHub | `pinework github connect`, then `pinework browser open <url>` (config.md) |
+| Which instructions should agents follow | `pinework import scan` finds CLAUDE.md and AGENTS.md. Use them to learn each project, and link the project page in each agent's instructions (save.md) |
+| ChatGPT paste section in Chief's prompt | paste.md |
 
-One agent per job. Never propose an agent whose job overlaps another's.
+## Laws
 
-## 3. Create the team on a yes
-
-Create nothing until the user says yes. If they change the list, create the changed list.
-
-Create each agent with the `create-agent` skill. Then tell the user each agent's @handle in one line, and suggest one first task for one agent. File it only on a yes.
-
-## 4. Read their Claude Code sessions
-
-Ask first, and say the path:
-
-```
-Can I read your recent Claude Code sessions? They're in ~/.claude/projects on this computer. I'll summarize them and suggest next steps.
-```
-
-On a yes, create a task for yourself that runs on their computer:
-
-```
-pinework run get current --fields conversationId
-pinework task create --assignee me --env device --title "Read and summarize recent Claude Code sessions" --description-file brief.md
-```
-
-The brief tells the task's run to:
-
-1. List the folders in `~/.claude/projects`, newest first. Each `.jsonl` file is one session.
-2. Read the 10 newest sessions. Skip any file over 5 MB and say so.
-3. Write the summary: the projects, what the user worked on, what is unfinished.
-4. Propose 2 or 3 next steps. Each is one task and the agent that would own it.
-5. Post the summary and the next steps to this conversation with `pinework conversation message post <cnv_…> --body-file <file>`. Keep the post under 150 words.
-6. Close the task with the summary as its last comment.
-
-Put the `cnv_` id from the first command in the brief. Tell the user you started, and that the summary lands in this conversation when it is done.
-
-For many sessions, split the reading into several tasks, one per project folder. Each task posts its own summary. The last one proposes the next steps.
-
-If the task does not start, the computer may be offline. Ask the user to open the Pinework desktop app.
-
-## 5. Hand off
-
-When the team exists and one task is filed, say what happens next in one line: the agent works, and the user sees it on the board. Then stop asking questions.
+- Read nothing on the Mac before the user says yes, and say what you will read.
+- Only `pinework import knowledge` reads coding agent memory and sessions. Never open `~/.claude`, `~/.codex` or `~/.cursor` yourself. It removes secrets first. You cannot.
+- A `[REDACTED:…]` marker is a removed secret. Never guess what it held.
+- Never invent a fact. A thin source gets fewer agents.
+- Refer to the user by name, or as "the user". Never guess a pronoun.
+- A command that fails: say in plain words what did not work and offer the settings link from config.md. Never retry the same command more than once.
