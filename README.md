@@ -103,6 +103,8 @@ To block merges on a CHANGES verdict, add a required check that reads the newest
 
 ### Set it up in Pinework
 
-1. Install the plugin: `pinework plugin install --marketplace pinework --plugin pr-review --agent <reviewer agent>`. Or add it from the plugin store in the dashboard.
+1. Add this marketplace once, then install the plugin for your reviewer agent:
+   `pinework marketplace add https://github.com/pinework-ai/skills`
+   `pinework plugin install --marketplace pinework --plugin pr-review --agent <reviewer agent>`
 2. Give the reviewer agent its job in its instructions: review one PR with the `pr-review` skill, post one verdict, never merge.
 3. Create the automation: `pinework automation create --name "PR review" --event pr-checks-passed --repo <owner/name> --agent <reviewer agent> --prompt "Use the pr-review skill on the PR in this event."`. It fires when a task's pull request goes green at a new head.
