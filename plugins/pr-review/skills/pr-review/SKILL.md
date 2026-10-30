@@ -9,13 +9,15 @@ One PR, one head, one comment. Never inline comments, never `gh pr review`, neve
 
 Input: a PR number or URL. Run inside a clone of the PR's repo. Call it `R` (`owner/name`).
 
+Run one shell command per tool call, with no pipes, `&&` or `;`. Chained commands trip common `Bash(gh:*)` allow rules and the run ends with nothing posted.
+
 ## 1. Pin the head and gate
 
 - `gh pr view <n> --repo R --json state,isDraft,headRefOid,headRefName,baseRefName,headRepositoryOwner,title,body,commits`.
 - Call the head `H` (full sha), the base `B`.
 - Closed, merged or draft: post nothing. End with "Skipped".
 - Count verdicts at `H`:
-  `gh api repos/R/issues/<n>/comments --paginate --jq '.[].body' | grep -E "^Verdict: (APPROVE|CHANGES) at <H>"`
+  `gh api repos/R/issues/<n>/comments --paginate --jq '.[].body | select(test("^Verdict: (APPROVE|CHANGES) at <H>"))'`
 - Any line: post nothing. End with "Verdict exists at <short H>". One verdict per head.
 
 ## 2. Read the config from the base branch
@@ -100,7 +102,7 @@ Only when `fix` is yes. Else stop.
 
 1. `git checkout -B <headRefName> <H>`.
 2. Fix only the CONFIRMED blocking findings. Change nothing else.
-3. Run the targeted tests or checks the `rules:` files name for the files you changed. A fix that fails them is not pushed. Comment the failure on the PR and stop.
+3. Run the targeted tests or checks the `rules:` files name for the files you changed. With no `rules:` files, run the commands the repo's CI workflows run on those files. A fix that fails them is not pushed. Comment the failure on the PR and stop.
 4. Commit once, as the reviewer:
    `git commit --author="pr-review <pr-review@users.noreply.github.com>" -m "fix: pr-review auto-fix for <short H>" -m "<one line per finding fixed>"`
 5. `git push origin HEAD:<headRefName>`. Never force-push. A rejected push means the head moved: stop.
