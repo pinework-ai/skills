@@ -58,49 +58,6 @@ rules:              # files the review checks the diff against
 
 Then ask: "review PR 123 with pr-review".
 
-### Run it in GitHub Actions
-
-This workflow uses [anthropics/claude-code-action](https://github.com/anthropics/claude-code-action) and runs after your CI workflow passes. Set `workflows:` to your CI workflow's name and add an `ANTHROPIC_API_KEY` secret. Run it only on repos you trust: it runs with your secrets.
-
-```yaml
-name: pr-review
-on:
-  workflow_run:
-    workflows: [CI]
-    types: [completed]
-
-permissions:
-  contents: write        # auto-fix pushes a commit. Use read with autofix off.
-  pull-requests: write
-  issues: read
-  id-token: write
-
-jobs:
-  review:
-    if: >-
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.pull_requests[0]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: anthropics/claude-code-action@v1
-        with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          plugin_marketplaces: https://github.com/pinework-ai/skills.git
-          plugins: pr-review@pinework
-          prompt: >-
-            Use the pr-review skill on PR
-            ${{ github.event.workflow_run.pull_requests[0].number }}
-            in ${{ github.repository }}.
-          claude_args: >-
-            --allowedTools "Bash(gh:*),Bash(git:*),Read,Edit,Write,Grep,Glob,Task"
-```
-
-To block merges on a CHANGES verdict, add a required check that reads the newest `Verdict:` line at the PR head.
-
 ### Set it up in Pinework
 
 1. Add this marketplace once, then install the plugin for your reviewer agent:
