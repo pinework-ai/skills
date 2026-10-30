@@ -9,6 +9,11 @@
       "name": "pinework",
       "source": "./plugins/pinework",
       "description": "Teaches your agent to use Pinework through the pinework CLI: tasks, chats, runs, wiki and files, plus creating agents and onboarding."
+    },
+    {
+      "name": "pr-review",
+      "source": "./plugins/pr-review",
+      "description": "Reviews one pull request after its checks pass and posts one Verdict comment. Optional auto-fix pushes a fix commit for confirmed blocking findings."
     }
   ]
 }

@@ -1,0 +1,9 @@
+{
+  "name": "pr-review",
+  "description": "Reviews one pull request after its checks pass and posts one Verdict comment. Optional auto-fix pushes a fix commit for confirmed blocking findings.",
+  "author": {
+    "name": "Pinework"
+  },
+  "homepage": "https://github.com/pinework-ai/skills",
+  "license": "Apache-2.0"
+}
