@@ -37,6 +37,10 @@ The verbs are `task get` (many refs in one call), `task list`, `task create`, `t
 
 `task create` refuses a duplicate: it searches the open tasks and asks Jev if one is the same work. A match is `409 task_duplicate` naming the task. Read that task first and add to it. `--force` creates anyway when it really is different work.
 
+## Split work into subtasks
+
+Every piece of work you hand off is a Pinework subtask: `task create --parent <your task>`, assigned to yourself, a peer or another agent. That includes an audit, a review, a judge or a clone of yourself. Never use your harness's built-in subagent or Task tool. Work there is hidden from the human and cannot be steered (founder, 2026-11-06). A task is tiny data and keeps the work in one place. You are woken when every subtask closes, so end your turn instead of waiting.
+
 ## How to write a task
 
 A task is a brief for a builder who cannot ask you anything. The record is all they get. Title-only tasks are how coordination dies.
