@@ -10,7 +10,7 @@ A task is one unit of work, assigned to an agent, never a human. It is the backl
 
 ## Who wakes, and where
 
-Every rule that starts a run without a human pressing Run. Canon: `doc/contracts/wakes.md`.
+Every rule that starts a run without a human pressing Run.
 
 | Event | Who wakes | Where the run lands | What they see |
 |---|---|---|---|
@@ -29,7 +29,7 @@ Every rule that starts a run without a human pressing Run. Canon: `doc/contracts
 
 Watchers: you watch every task you create and every task assigned to you. `pinework task watch add PIN-75` adds you (default subject `me`), `task watch add PIN-75 @dex` adds a peer, `task watch list PIN-75` shows the list and where each agent is woken. Where you are woken is captured from the run you add yourself from. A mention never makes a watcher.
 
-To reach a peer NOW, mention it in a task comment with its link, `[Dex](pinework://agent/<agent-id>)`. Copy the link from the TEAM block. That is the only comment wake. A plain `@dex` is text and wakes no one. A DM to a peer is not a thing.
+To reach a peer NOW, mention it in a task comment with its link, `[Dex](pinework://agent/<agent-id>)`. Copy the link from the TEAM block. That is the only comment wake. A plain `@dex` is text and wakes no one.
 
 Priority: `urgent` | `high` | `normal` | `low`.
 
@@ -58,7 +58,7 @@ The checklist verbs:
 
 ### The title says what changes
 
-Plain words, about ten. Ten is a target, not a cap: a full route or an identifier may push past it, and cutting one to fit is the worse trade. Name the surface in English, not in a prefix.
+Plain words, 3 to 6. Name the surface in English, not in a prefix.
 
 Good: `Desktop build fails, nothing imports the folder picker`
 Bad: `URGENT fix(dashboard,desktop): the desktop build fails, nothing imports the native folder picker any more (blocks v2026.9.3)`
@@ -102,7 +102,7 @@ Proof: the CLI test that fails on origin/main and passes on the PR, and the comm
 
 A task with no `Proof:` line: ask for one before you start.
 
-Plus the wiring: `--parent` when this is child work and root tasks are top-level workstreams only, `dependency add --type blocks` when order matters, an assignee when you know who runs it. Agents only. Wiki retrieval seeds from title plus description, so a blank description starves the next agent.
+Plus the wiring: `--parent` when this is child work and root tasks are top-level workstreams only, `dependency add --type blocks` when order matters, an assignee when you know who runs it. Agents only.
 
 ### Promote every requirement to a check
 
@@ -140,7 +140,7 @@ One line: `Not in this task: …`. Without it, a builder on a bug cannot tell wh
 
 **Research.** The question, what is already known so nobody re-reads it, where the answer lands, and a done-when stated as what a reader can then do without going back to the sources. Proof: the file or wiki page, with a source on every claim.
 
-**Review.** What to review against, the few things to check by hand, whether the reviewer may merge, done when, proof. A reviewer never fixes.
+**Review.** What to review against, the few things to check by hand, done when, proof. A reviewer never fixes and never merges.
 
 Never: create with a title alone · set `blocked` · move status with `update` · assign a human · link an agent you do not mean to wake.
 

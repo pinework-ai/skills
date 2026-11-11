@@ -1,6 +1,6 @@
 # The browser verbs
 
-A run can look at a page and click through a UI. Six verbs drive one browser tab. On a device run it is the tab inside Pinework Desktop. In a cloud run it is a headless browser inside the cloud box. `browser open <url>` opens or reuses the tab. `navigate <url>` moves the open tab. `snapshot` prints the page as refs you can act on. `click <@eN>` presses the element a ref names. `type <@eN> "text"` types into it. `exec` runs your own script in the page. A seventh verb, `fill <login>`, works in a cloud run only. `pinework browser <cmd> --help` has the flags.
+A run can look at a page and click through a UI. Six verbs drive one browser tab. On a device run it is the tab inside Pinework Desktop. In a cloud run it is a headless browser inside the cloud box. `browser open <url>` opens or reuses the tab. `navigate <url>` moves the open tab. `snapshot` prints the page as refs you can act on. `click <@eN>` presses the element a ref names. `type <@eN> "text"` types into it. `exec` runs your own script in the page. A seventh verb, `fill <login>`, types a vaulted login, in a cloud run or through Pinework Desktop on a device. `pinework browser <cmd> --help` has the flags.
 
 Rules:
 
@@ -12,7 +12,7 @@ This is not `agent-browser`. That drives a separate Chromium nobody can watch. T
 
 **Where the tab lives.** On a device it lives in Pinework Desktop, which runs on macOS only. Install or update Desktop when a verb answers `app_unavailable`. In a cloud run the tab is a headless browser in the box, and no human watches it. There is nothing to install, so never send a cloud run to Desktop.
 
-## `fill` — a vaulted login, in a cloud run
+## `fill`: a vaulted login
 
 `pinework browser fill <login>` types a login from the vault into the open page. Name the login by its id or name. It must be granted to you, and the page's origin must be one of the login's URLs. The API refuses any other page.
 
@@ -24,7 +24,6 @@ pinework browser snapshot
 
 - **You never see the value.** The verb prints which boxes it filled, `username filled, password filled`, or booleans with `--json`. The value goes from the API to the page and nowhere else.
 - **Two-step logins fill twice.** When the page has no password box yet, the verb fills the username and says so. Submit it, then run `fill` again on the next page.
-- **On a device it answers `not_supported_on_device`**. There, a human fills the login with the Vault button in Pinework Desktop.
 
 ## `exec` — when the five verbs do not fit
 
