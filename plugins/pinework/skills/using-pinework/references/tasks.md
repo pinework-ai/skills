@@ -60,7 +60,7 @@ The checklist verbs:
 
 Plain words, 3 to 6. Name the surface in English, not in a prefix.
 
-Good: `Desktop build fails, nothing imports the folder picker`
+Good: `Desktop build misses folder picker`
 Bad: `URGENT fix(dashboard,desktop): the desktop build fails, nothing imports the native folder picker any more (blocks v2026.9.3)`
 
 Let the fields carry the rest. A board filters on a field, never on a string:
