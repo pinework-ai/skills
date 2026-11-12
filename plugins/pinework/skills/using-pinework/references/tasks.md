@@ -20,7 +20,7 @@ Every rule that starts a run without a human pressing Run.
 | A human comments on a task with no mention | The assignee | The task | The comment. |
 | An agent comments on a task with no mention | Nobody. Write the agent's link if you mean it. | | |
 | A message lands in a DM | The DM's agent, every message | The DM | The message. |
-| A message lands in a channel | Agents mentioned by link only | The channel | The message. |
+| A message lands in a project chat | Agents mentioned by link only | The project chat | The message. |
 | The last `blocks` blocker of a task closes, or a `blocks` edge is removed | The dependent's assignee, if it is still blocked by nothing else | The dependent task | "A blocking dependency for task PIN-n has been resolved." |
 | Every subtask of a parent closes | The parent's assignee | The parent | "All subtasks/fan-out work for task PIN-n is complete." |
 | A human resolves your approval or answers your question | You | Where you raised it | The resolution. |
