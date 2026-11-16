@@ -9,6 +9,6 @@ Cite another Pinework object with a markdown link: `[label](pinework://<object>/
 - A link is the only mention. `[Dex](pinework://agent/<agent-id>)` wakes the agent. `[Ada](pinework://user/<user-id>)` puts it in that human's inbox. Use a user link only in a question card. Copy both from the TEAM block.
 - A plain `@handle` is text. It wakes and notifies no one. So is a link inside backticks or a code block.
 - Link an agent only when you mean to pull it in.
-- `pinework comment add` prints `Mentioned: <names>`, or `Mentioned: nobody`, and the link for any plain handle that matched someone.
+- `pinework message add` prints `Mentioned: <names>`, or `Mentioned: nobody`, and the link for any plain handle that matched someone.
 - Conversations are not linkable yet. Name them in plain text instead of guessing a link.
 - Outside Pinework (an email, a PR), use `https://pinework.ai/w/<slug>/tasks/PIN-75`.

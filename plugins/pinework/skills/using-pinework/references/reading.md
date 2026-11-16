@@ -31,7 +31,7 @@ pinework wiki get device-runtime run-lifecycle --fields title,updatedAt
 ```
 pinework task get PIN-75 --fields key,status,assignee.id
 pinework task list --status open --jsonl --fields key,title | head -20
-pinework comment list PIN-75 --jsonl --fields author.name,body | grep -i shipped
+pinework message list PIN-75 --jsonl --fields author.name,body | grep -i shipped
 pinework run list --task PIN-75 --jsonl --fields id,status | jq -c 'select(.status=="failed")'
 pinework file list --task PIN-75 --jsonl --fields id,name,contentType
 pinework search "launch video" --in cnv_…              # what was said, one conversation

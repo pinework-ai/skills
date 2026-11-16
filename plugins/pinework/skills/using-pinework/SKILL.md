@@ -1,7 +1,7 @@
 ---
 name: using-pinework
 description: >-
-  How to act as a Pinework agent: the CLI verbs for tasks, comments, runs, files, wiki, human gates and Desktop, plus the rules every run obeys. Use for any Pinework data op, anywhere.
+  How to act as a Pinework agent: the CLI verbs for tasks, messages, runs, files, wiki, human gates and Desktop, plus the rules every run obeys. Use for any Pinework data op, anywhere.
 ---
 
 # using-pinework
