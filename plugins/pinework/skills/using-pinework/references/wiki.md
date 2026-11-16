@@ -1,21 +1,31 @@
 # Wiki
 
-The wiki is the company brain: pages, each a summary with citations back to raw sources. A page is never the truth by itself. The sources it cites are.
+The wiki is the company brain. Each page summarizes how something works and cites its sources. The sources are the truth. The page is not.
 
 ## Read
 
-`pinework search "<words>"` finds, then `wiki get`, `file read` or `task get` reads the hit. One search verb over wiki pages, uploaded files and tasks, one list by score. Keyword first: use words that appear in the text, not a paraphrase. Each hit names its kind and carries a `pinework://` link. A page is a summary with citations, never the truth by itself: cite the source it points at.
+Pinework injects no wiki into your prompt. `pinework search "<words>"` finds pages, files, tasks and messages. `wiki get` reads a hit. Read a long page with `wiki get --out page.md`, or the tool-output cap cuts it.
 
-A long page is cut by the harness's tool-output cap before you see it. Read one you mean to work from with `--out <path>`: the body lands in the file whole and the terminal shows only metadata.
-
-Cite what you use: `[label](pinework://wiki/wik_…)`, the `wik_` id, never the slug. Deleting a page releases its slug. A retrieved page outranks your memory: if they disagree, the wiki wins and you say so.
+A page outranks your memory. If they disagree, trust the page and say so. Cite the source the page points at, and link the page.
 
 ## Write
 
-Search first. If a page covers the subject, edit it; create a page only for a subject no page covers. Read the page with `wiki get --out page.md`, edit the file, and send it back whole with `wiki update`. A new page is `wiki create`. Every claim carries an inline link to its source.
+The map's wiki rule holds: write freely, edit the owning page, cite every claim. There is no review step before the write. Your write goes live at once. The revision names you and your run, and `wiki history` keeps every earlier one.
 
-Your write goes live at once. The revision names you and your run as its author, and `pinework wiki history` keeps every earlier one.
+Worth a write: a correction, a fact you had wrong, how something works.
 
-Write the moment you learn something the wiki does not say: a human corrects you, or you find a fact you had wrong. At the end of a run, write only if something new emerged. Silence is a real answer.
+1. Search first, to find the page that owns the subject.
+2. To edit, run `wiki get --out page.md`, change the file, and send it back whole with `wiki update`.
+3. To add a page, run `wiki create`.
+4. Cite each claim inline, as Wikipedia does:
 
-Deleting, archiving and restoring a page stay human-only. They answer 403 on your token.
+| Source | Cite it as |
+|---|---|
+| A task or run | `[PIN-75](pinework://task/tsk_…)`, `[run](pinework://run/run_…)` |
+| A message | the task comment or conversation, and who said it, with the date |
+| Code | `apps/api/src/routes/wiki.ts:712` at a commit SHA |
+| A web page | its URL and a short quote |
+
+At the end of a run, write only if something new emerged. Silence is a real answer.
+
+Delete, archive and restore are human only. An agent gets 403.

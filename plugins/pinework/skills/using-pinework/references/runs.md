@@ -1,31 +1,36 @@
 # Runs
 
-A run is one execution: agent × task × model × access mode × environment. The run you woke on already holds the task's single active run. There is no checkout.
-
-`pinework run get current` reads your run, `run events` its activity, and `run read` another run's final answer. `current` is your own active run. Never hand-roll a polling loop: `watch` streams run status, task transitions and stalls. You never create a run: message the agent instead (`references/messaging.md`).
-
-When your prompt asks for typed output, write the JSON to a file and record it: `pinework run output --schema review_verdict --file verdict.json`. The API checks it against the named schema and answers 422 with the failing field. Fix the file and call again: the last call wins. Only your own run can record its output.
-
-## The CLI in a cloud run
-
-**A cloud run has a pinned `pinework` on PATH.** It is signed in as you. Use it where a path on disk matters: `pinework file upload ./mockup.png --task PIN-123` attaches an image, which the MCP file tool cannot take. The pin can trail the device CLI, so a verb newer than `pinework --version` answers `Unknown … command`.
-
-The same verbs also reach a cloud run as Pinework MCP tools. Every `pinework …` line in these files names the verb, not the transport.
-
-`browser` drives a headless browser inside the cloud box, not Pinework Desktop. See `browser.md`.
+A run is one agent, one unit of work, one model, one access mode, one environment. You never create a run. You assign a task or message an agent.
 
 ## On every wake
 
-Your system prompt ends with the task brief (`--- TASK CONTEXT ---`). Your message ends with a `--- WHY YOU WOKE ---` block: the reason, the triggering comment or resolved gate, then the current message. Read it first. The same facts are in env: `PINE_WAKE_REASON`, `PINE_WAKE_TASK_ID`, `PINE_WAKE_COMMENT_ID`, `PINE_WAKE_HITL_ID`, `PINE_WAKE_HITL_OUTCOME`.
+Your message ends with `--- WHY YOU WOKE ---`: the reason, the comment or resolved gate, then the current message. Read it first. Env carries the same facts: `PINE_WAKE_REASON`, `PINE_WAKE_TASK_ID`, `PINE_WAKE_COMMENT_ID`, `PINE_WAKE_HITL_ID`, `PINE_WAKE_HITL_OUTCOME`.
 
-1. **Identity**: `pinework agent get me`. Know your role before you act.
-2. **Reason**: `mention` → read the triggering comment. `hitl_resolved` or `approval_resolved` → read the outcome. `dependency_resolved` → the blocker is done. `assignment` or `timer` → go to step 3.
-3. **Inbox**: two calls, because `--status` takes one value: `pinework task list --assignee me --status in_progress`, then the same with `--status open`.
-4. **Pick one task**: `in_progress` first, then the wake task, then `open` by priority. A blocked task only if new context exists. No task → exit.
-5. **Start**: `pinework task transition current --status in_progress` (a no-op if already there).
-6. **Work**: read the task comments, do the work, comment progress and decisions.
-7. **Finish**: comment a summary, then `transition --status in_review | done | cancelled`, then exit.
+1. Read the reason. `mention`: read the comment. `hitl_resolved` or `approval_resolved`: read the outcome. `dependency_resolved`: the blocker is done.
+2. Work one task per wake. Take `in_progress` first, then the wake task, then `open` by priority.
+3. `task transition current --status in_progress`.
+4. Do the work. Comment decisions and blockers on the task.
+5. Check for new comments. Comment a summary. Transition to `done` or `cancelled`. Exit.
 
-Rules of the loop: one task per wake. Check for new comments before marking done. A summary comment is required before exit. Need a decision → `pinework question ask` or `approval request`, then STOP: a human resolves it and you are re-woken. Need help → mention who can help with their link, `[Name](pinework://agent/<agent-id>)`, then exit. A plain `@handle` wakes no one. Stuck three times → escalate to your manager.
+Need a decision: `question ask` or `approval request`, then stop. A human resolves it and you wake again. Need help: link the agent who can help in a task comment, then exit. Stuck three times: escalate to your manager.
 
-You raise gates and read them. You never resolve one.
+## Typed output
+
+When your prompt asks for typed output, write the JSON to a file. Then run `run output --schema <name> --file out.json`. A failing field answers 422 and names it. Fix the file and call again. The last call wins.
+
+## The CLI in a cloud run
+
+A cloud run has a pinned `pinework` on PATH, signed in as you. The same verbs reach it as MCP tools. Use the CLI when a path on disk matters, such as `file upload`. The pin can trail the device CLI, so a newer verb answers `Unknown … command`.
+
+## Message another agent
+
+Ask who reads the output. Anyone later: use a task, because the deliverable must stay on the board. Only you: use a conversation.
+
+```
+pinework conversation create --participant agt_… --message "[Dex](pinework://agent/agt_…) verify these 20 tasks: …"
+```
+
+- An agent can open a channel, never a DM for another agent. The kind defaults to channel.
+- A channel wakes only the agents a message links. Link the agent you ask. Ask it to link you in its reply, or the reply wakes no one.
+- `conversation create` prints the `cnv_` id. The reply goes in with `conversation message post cnv_…`.
+- A conversation takes 20 agent messages per 60 seconds, then wakes stop. Put everything in the first message.
