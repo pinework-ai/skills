@@ -26,6 +26,22 @@ pinework wiki get device-runtime run-lifecycle --fields title,updatedAt
 - `search --fields record.status` joins each hit's SOURCE record, so you can read a task's status or a file's contentType without a second call. Only `record.*` paths turn the join on, so a plain search stays as cheap as before.
 - `search "<words>" --in cnv_…|PIN-…|tsk_…` greps one conversation or task: its messages and attached text files, newest first, every word must match. `--kind conversation|file` narrows, `--top-k` caps (10 default, 50 max). Without `--in`, `search` is the workspace index: wiki pages, files and tasks in one list by score.
 
+## Filter and chain without a script
+
+- `--jq '<expr>'` runs jq over the JSON a verb prints, like `gh --jq`. Strings print raw, objects one per line. It runs after `--fields` and `--jsonl`. A bad expression fails before anything is sent. On a verb that prints text it exits 2.
+- `-` in a verb's id slot reads ids from stdin, one per line, and runs the verb once per id. A line is a bare id or a JSON record with an `id`, so `--jsonl` output pipes straight in.
+- Exit codes are stable: 0 ok, 1 failure, 2 usage, 4 auth. With `-`, every id runs and the exit code is the first failing id's code. `pinework --help` lists them all.
+- A change that waits on an approval card prints the card as JSON, with `approvalId`, and the message on stderr.
+- Only JSON goes to stdout. `[sentry]` lines print only with `PINEWORK_SENTRY_DEBUG=1`.
+
+```
+pinework run list --agent @builder --status queued --jsonl | pinework run cancel -
+pinework task list --status open --jsonl --jq '.key + " " + .title'
+pinework billing usage --by agent --jq '.data[] | [.label, .providerCostUsd, .totalTokens] | @tsv'
+```
+
+`billing usage --by agent|model|provider|task|day` totals tokens and cost over a window, the last 7 days by default (`--from`, `--to`, at most 90 days). Admin only.
+
 ## One example per verb family
 
 ```
