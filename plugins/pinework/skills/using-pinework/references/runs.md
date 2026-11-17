@@ -16,16 +16,16 @@ The same verbs also reach a cloud run as Pinework MCP tools. Every `pinework …
 
 ## On every wake
 
-Your system prompt ends with the task brief (`--- TASK CONTEXT ---`). Your message ends with a `--- WHY YOU WOKE ---` block: the reason, the triggering comment or resolved gate, then the current message. Read it first. The same facts are in env: `PINE_WAKE_REASON`, `PINE_WAKE_TASK_ID`, `PINE_WAKE_COMMENT_ID`, `PINE_WAKE_HITL_ID`, `PINE_WAKE_HITL_OUTCOME`.
+Your system prompt ends with the task brief (`--- TASK CONTEXT ---`). Your message ends with a `--- WHY YOU WOKE ---` block: the reason, the triggering message or resolved gate, then the current message. Read it first. The same facts are in env: `PINE_WAKE_REASON`, `PINE_WAKE_TASK_ID`, `PINE_WAKE_COMMENT_ID`, `PINE_WAKE_HITL_ID`, `PINE_WAKE_HITL_OUTCOME`.
 
 1. **Identity**: `pinework agent get me`. Know your role before you act.
-2. **Reason**: `mention` → read the triggering comment. `hitl_resolved` or `approval_resolved` → read the outcome. `dependency_resolved` → the blocker is done. `assignment` or `timer` → go to step 3.
+2. **Reason**: `mention` → read the triggering message. `hitl_resolved` or `approval_resolved` → read the outcome. `dependency_resolved` → the blocker is done. `assignment` or `timer` → go to step 3.
 3. **Inbox**: two calls, because `--status` takes one value: `pinework task list --assignee me --status in_progress`, then the same with `--status open`.
 4. **Pick one task**: `in_progress` first, then the wake task, then `open` by priority. A blocked task only if new context exists. No task → exit.
 5. **Start**: `pinework task transition current --status in_progress` (a no-op if already there).
-6. **Work**: read the task comments, do the work, comment progress and decisions.
-7. **Finish**: comment a summary, then `transition --status in_review | done | cancelled`, then exit.
+6. **Work**: read the task's messages with `pinework message list current`, do the work, post progress and decisions with `pinework message add`.
+7. **Finish**: post a summary with `pinework message add`, then `transition --status in_review | done | cancelled`, then exit.
 
-Rules of the loop: one task per wake. Check for new comments before marking done. A summary comment is required before exit. Need a decision → `pinework question ask` or `approval request`, then STOP: a human resolves it and you are re-woken. Need help → mention who can help with their link, `[Name](pinework://agent/<agent-id>)`, then exit. A plain `@handle` wakes no one. Stuck three times → escalate to your manager.
+Rules of the loop: one task per wake. Check for new messages before marking done. A summary message is required before exit. Need a decision → `pinework question ask` or `approval request`, then STOP: a human resolves it and you are re-woken. Need help → mention who can help with their link, `[Name](pinework://agent/<agent-id>)`, then exit. A plain `@handle` wakes no one. Stuck three times → escalate to your manager.
 
 You raise gates and read them. You never resolve one.

@@ -29,11 +29,11 @@ Every rule that starts a run without a human pressing Run.
 
 Watchers: you watch every task you create and every task assigned to you. `pinework task watch add PIN-75` adds you (default subject `me`), `task watch add PIN-75 @dex` adds a peer, `task watch list PIN-75` shows the list and where each agent is woken. Where you are woken is captured from the run you add yourself from. A mention never makes a watcher.
 
-To reach a peer NOW, mention it in a task comment with its link, `[Dex](pinework://agent/<agent-id>)`. Copy the link from the TEAM block. That is the only comment wake. A plain `@dex` is text and wakes no one.
+To reach a peer NOW, mention it in a message on a task with its link, `[Dex](pinework://agent/<agent-id>)`. Copy the link from the TEAM block. That is the only message wake. A plain `@dex` is text and wakes no one.
 
 Priority: `urgent` | `high` | `normal` | `low`.
 
-The verbs are `task get` (many refs in one call), `task list`, `task create`, `task transition`, `task dependency add` and `comment add`. `pinework task <cmd> --help` has the flags. `transition` owns status, and `update` cannot move it.
+The verbs are `task get` (many refs in one call), `task list`, `task create`, `task transition`, `task dependency add` and `message add`. `pinework task <cmd> --help` has the flags. `transition` owns status, and `update` cannot move it.
 
 `task create` refuses a duplicate: it searches the open tasks and asks Jev if one is the same work. A match is `409 task_duplicate` naming the task. Read that task first and add to it. `--force` creates anyway when it really is different work.
 
