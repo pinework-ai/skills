@@ -2,7 +2,7 @@
 
 A run is one execution: agent × task × model × access mode × environment. The run you woke on already holds the task's single active run. There is no checkout.
 
-`pinework run get current` reads your run, `run events` its activity, and `run read` another run's final answer. `current` is your own active run. Never hand-roll a polling loop: `watch` streams run status, task transitions and stalls. You never create a run: message the agent instead (`references/messaging.md`).
+`pinework run get current` reads your run, `run events` its activity, and `run read` another run's final answer. `run list --agent @handle --task PIN-n --status queued` finds runs, and `run cancel <run_…>` prints `{"ok":true,"runId":…}`. `current` is your own active run. Never hand-roll a polling loop: `watch` streams run status, task transitions and stalls. You never create a run: message the agent instead (`references/messaging.md`).
 
 When your prompt asks for typed output, write the JSON to a file and record it: `pinework run output --schema review_verdict --file verdict.json`. The API checks it against the named schema and answers 422 with the failing field. Fix the file and call again: the last call wins. Only your own run can record its output.
 

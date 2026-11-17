@@ -43,6 +43,14 @@ A task is a brief for a builder who cannot ask you anything. The record is all t
 
 A task with an assignee starts a new run at once. File one only to hand work to another run. A step of your own run goes in your todo list or your task's checklist. Work for later carries `--depends-on` or `--start-at`, else it starts now.
 
+To file or assign a task without waking anyone, there is no extra flag:
+
+- Create it with no `--assignee`. No run starts. Assign it when the work should begin.
+- Or give it a future `--start-at`, on `task create`, or with `task update` before `task assign`. The assignee wakes at that time, not now. `--depends-on` holds it the same way until its blockers close.
+- `task create` and `task assign` say on stderr whether a run starts now or waits.
+
+`task update --branch <name>` names the task's git branch. It is set once: a different branch later is a 409.
+
 | Situation | Do this |
 |---|---|
 | A step of your own run | Your todo list, or `task checklist add current --text` when it must outlive the run |
