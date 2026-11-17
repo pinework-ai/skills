@@ -24,10 +24,10 @@ pinework paid call <service-slug> --input '{"field":"value"}' --idempotency-key 
 
 Always pass `--idempotency-key`. Make it unique to this one call and stable across retries, such as `<task-number>-<what>-<n>`: `PIN-123-geocode-1`. Letters, digits, `.`, `_` and `-` only, at most 100.
 
-- A retry with the same key and input pays once and returns the first result.
+- A retry with the same key and input pays once. Once that call has finished, the retry answers 409 `idempotency_key_used`: the first call's result is the answer, so never retry it with a new key.
 - Without a key, the API makes a new one, so a retry pays again.
 - `status: pending` means the outcome is not known yet. Retry with the same key. Never with a new one.
-- A 409 means you used the key for a different call. Pick a new key.
+- A 409 `idempotency_key_reused` means you used the key for a different call. Pick a new key.
 
 ## The wallet
 
