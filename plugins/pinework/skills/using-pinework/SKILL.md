@@ -8,6 +8,8 @@ description: >-
 
 Your prompt already carries the Pinework index: the verb families, the six rules, links and files. This skill holds the detail behind it. Flags live in `pinework <group> <cmd> --help`, never here.
 
+Need web search, scraping, enrichment or similar outside data: run `pinework paid search` first. The workspace wallet pays per call.
+
 ## References
 
 - `references/tasks.md`: statuses, who wakes and where, watchers, how to write a task.
